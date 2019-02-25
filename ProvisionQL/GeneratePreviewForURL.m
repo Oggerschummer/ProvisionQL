@@ -367,6 +367,21 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
                     appTransportSecurityFormatted = @"Not applicable before iOS 9.0";
                 }
             }
+            //SAPMAY 20190221 BEGIN
+
+          value = [appPropertyList objectForKey:@"BuildTime"];
+          [synthesizedInfo setObject:[value isKindOfClass:[NSString class]]?value:@"unknown" forKey:@"BuildTime"];
+
+          value = [appPropertyList objectForKey:@"GitVersion"];
+          [synthesizedInfo setObject:[value isKindOfClass:[NSString class]]?value:@"unknown" forKey:@"GitVersion"];
+
+          value = [appPropertyList objectForKey:@"GitBranch"];
+          [synthesizedInfo setObject:[value isKindOfClass:[NSString class]]?value:@"unknown" forKey:@"GitBranch"];
+
+          value = [appPropertyList objectForKey:@"GitTag"];
+          [synthesizedInfo setObject:[value isKindOfClass:[NSString class]]?value:@"" forKey:@"GitTag"];
+
+            //SAPMAY 20190221 END
 
             [synthesizedInfo setObject:appTransportSecurityFormatted forKey:@"AppTransportSecurityFormatted"];
 
@@ -424,6 +439,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
                 NSString *replacementToken = [NSString stringWithFormat:@"__%@__", key];
                 [html replaceOccurrencesOfString:replacementToken withString:replacementValue options:0 range:NSMakeRange(0, [html length])];
             }
+
 
             // synthesize other replacement tokens and values
             value = [propertyList objectForKey:@"CreationDate"];
